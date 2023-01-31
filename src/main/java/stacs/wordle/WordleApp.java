@@ -12,7 +12,7 @@ public class WordleApp
 {
     public static final int MAX_WORD_SIZE = 5;
     public static final int MAX_ATTEMPTS = 6;
-    public static final char WINNING_MESSAGE [] = {'W','I','N','N','E','R'};
+    public static final String WINNING_MESSAGE = "WINNER";
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m"; 
@@ -28,7 +28,9 @@ public class WordleApp
     char test[];
     public static void main( String[] args ) throws FileNotFoundException
     {
-        System.out.println("Welcome to CS5031 - Wordle");
+        System.out.println("--------------------------");
+        System.out.println("Welcome to " + ANSI_GREEN +  "CS5031" + ANSI_RESET + "- Wordle");
+        System.out.println("--------------------------");
         System.out.println("Please enter input: ");
 
         WordleApp game = new WordleApp();
@@ -45,8 +47,7 @@ public class WordleApp
         for(int i = 0; i < MAX_ATTEMPTS; i++){
             String input = kb.next();
             char[] charInput = input.toCharArray();
-            System.out.println(game.checkSubmission(charInput));
-            
+            System.out.println((game.checkSubmission(charInput)));
         }
         kb.close();
 
@@ -69,15 +70,15 @@ public class WordleApp
     
     }
 
-    public char[] checkSubmission(char[] userInput){
+    public String checkSubmission(char[] userInput){
         // char test [] = {'c','r','a','n','e'};
-        char result[];
+        String result;
 
         if(isCorrect(userInput)){
             return WINNING_MESSAGE;
         }
         else{
-            result = checkLetters(userInput);
+            result = this.beautify(checkLetters(userInput));
             return result;
         }
         
@@ -104,11 +105,11 @@ public class WordleApp
                     }
                     else{
                         result[i] = 'X';
+
                     }
                 }
             }
         }
-
         return result;
     }
 
@@ -120,6 +121,34 @@ public class WordleApp
     public boolean isCorrect(char[] userInput){
         Boolean equal = Arrays.equals(this.test, userInput);
         return equal;
+    }
+
+    public void setTarget(char[] target){
+        this.test = target;
+    }
+
+    public String beautify(char[] result){
+        String[] colored = new String[result.length]; 
+
+        for(int i = 0; i < result.length; i++){
+            if(result[i] == 'G'){
+                colored[i] = ANSI_GREEN +  result[i] + ANSI_RESET;
+            }
+            else if(result[i] == 'Y'){
+                colored[i] = ANSI_YELLOW +  result[i] + ANSI_RESET;
+            }
+            else{
+                colored[i] = ANSI_RED +  result[i] + ANSI_RESET;
+            }
+        }
+
+        String output   = "|-----| |-----| |-----| |-----| |-----|\n";
+        String output1  = "|  "+colored[0]+"  | |  "+colored[1]+"  | |  "+colored[2]+"  | |  "+colored[3]+"  | |  "+colored[4]+"  |\n";
+        String output2  = "|-----| |-----| |-----| |-----| |-----|\n";
+
+        
+
+        return output + output1 + output2;
     }
 
     protected static String getWordle(ArrayList<String> words){
@@ -143,4 +172,6 @@ public class WordleApp
         s.close();
         return words;
     }
+
+
 }
