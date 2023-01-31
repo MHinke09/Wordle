@@ -11,7 +11,7 @@ import java.io.File;
 public class WordleApp
 {
     public static final int MAX_WORD_SIZE = 5;
-    public static final int MAX_ATTEMPTS = 5;
+    public static final int MAX_ATTEMPTS = 6;
     public static final char WINNING_MESSAGE [] = {'W','I','N','N','E','R'};
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -25,21 +25,33 @@ public class WordleApp
     
     //char[] targett = new char[MAX_WORD_SIZE];
     char tempt [] = {'c','r','a','n','e'};
+    char test[];
     public static void main( String[] args ) throws FileNotFoundException
     {
         System.out.println("Welcome to CS5031 - Wordle");
         System.out.println("Please enter input: ");
 
         WordleApp game = new WordleApp();
-        loadWordlist("src/test/resources/wordlist-test.txt");
+        ArrayList<String> dic = loadWordlist("../../../resources/wordlist.txt");
 
+        game.test = getWordle(dic).toCharArray();
 
+        for(char w: game.test){
+            System.out.print(w);
+        }
+        System.out.println();
 
         Scanner kb = new Scanner(System.in);
-        String input = kb.next();
+        for(int i = 0; i < MAX_ATTEMPTS; i++){
+            String input = kb.next();
+            char[] charInput = input.toCharArray();
+            System.out.println(game.checkSubmission(charInput));
+            
+        }
         kb.close();
-        char[] charInput = input.toCharArray();
-        System.out.println(ANSI_RED + "This text is red!" + ANSI_RESET);
+
+
+    
         //System.out.println(game.checkSubmission(charInput));
         //Now it has to start a fresh game
         //GAME is an object
@@ -57,31 +69,35 @@ public class WordleApp
     
     }
 
-    // public char[] checkSubmission(char[] userInput){
-    //     char test [] = {'c','r','a','n','e'};
+    public char[] checkSubmission(char[] userInput){
+        // char test [] = {'c','r','a','n','e'};
+        char result[];
 
-    //     System.out.println(this.tempt);
-    //     System.out.println(userInput);
-
-    //     if(isCorrect(userInput)){
-    //         return WINNING_MESSAGE;
-    //     }
-    //     else{
-
-    //     }
+        if(isCorrect(userInput)){
+            return WINNING_MESSAGE;
+        }
+        else{
+            result = checkLetters(userInput);
+            return result;
+        }
         
-    // }
+    }
 
 
+    /**
+     * 
+     * @param userInput
+     * @return
+     */
     public char[] checkLetters(char[] userInput){
         char[] result = new char[MAX_WORD_SIZE];
 
         for(int i = 0; i < MAX_WORD_SIZE; i++){
-            if(userInput[i] == this.tempt[i]){
+            if(userInput[i] == this.test[i]){
                 result[i] = 'G';
             }
             else{
-                for(char letter: this.tempt){
+                for(char letter: this.test){
                     if(userInput[i] == letter){
                         result[i] = 'Y';
                         break;
@@ -96,11 +112,27 @@ public class WordleApp
         return result;
     }
 
+    /**
+     * 
+     * @param userInput
+     * @return
+     */
     public boolean isCorrect(char[] userInput){
-        Boolean equal = Arrays.equals(this.tempt, userInput);
+        Boolean equal = Arrays.equals(this.test, userInput);
         return equal;
     }
 
+    protected static String getWordle(ArrayList<String> words){
+        int index = (int)(Math.random() * words.size());
+        return words.get(index);
+    }
+
+    /**
+     * 
+     * @param wordlistPath
+     * @return
+     * @throws FileNotFoundException
+     */
     protected static ArrayList<String> loadWordlist(String wordlistPath) throws FileNotFoundException
     {
         Scanner s = new Scanner(new File(wordlistPath));

@@ -18,6 +18,9 @@ public class WordleAppTest
 
         // test wordlist only contains 3 words, so wordlist should have the size of 3
         assertEquals(3, wordlist.size());
+
+        String wordle = WordleApp.getWordle(wordlist);
+        assertEquals("test", wordle);
     }
 
     @Test
