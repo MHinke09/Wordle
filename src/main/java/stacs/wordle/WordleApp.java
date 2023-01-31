@@ -28,10 +28,10 @@ public class WordleApp
     char test[];
     public static void main( String[] args ) throws FileNotFoundException
     {
-        System.out.println("--------------------------");
-        System.out.println("Welcome to " + ANSI_GREEN +  "CS5031" + ANSI_RESET + "- Wordle");
-        System.out.println("--------------------------");
-        System.out.println("Please enter input: ");
+        System.out.println("---------------------------------------");
+        System.out.println("       Welcome to " + ANSI_GREEN +  "CS5031" + ANSI_RESET + "- Wordle");
+        System.out.println("---------------------------------------");
+        System.out.println("Guess:");
 
         WordleApp game = new WordleApp();
         ArrayList<String> dic = loadWordlist("../../../resources/wordlist.txt");
@@ -46,6 +46,7 @@ public class WordleApp
         Scanner kb = new Scanner(System.in);
         for(int i = 0; i < MAX_ATTEMPTS; i++){
             String input = kb.next();
+            //PERFORM INPUT CHECKS
             char[] charInput = input.toCharArray();
             System.out.println((game.checkSubmission(charInput)));
         }
@@ -78,7 +79,7 @@ public class WordleApp
             return WINNING_MESSAGE;
         }
         else{
-            result = this.beautify(checkLetters(userInput));
+            result = this.beautify(checkLetters(userInput), userInput);
             return result;
         }
         
@@ -127,18 +128,18 @@ public class WordleApp
         this.test = target;
     }
 
-    public String beautify(char[] result){
-        String[] colored = new String[result.length]; 
+    public String beautify(char[] encoded, char[] userInput){
+        String[] colored = new String[encoded.length]; 
 
-        for(int i = 0; i < result.length; i++){
-            if(result[i] == 'G'){
-                colored[i] = ANSI_GREEN +  result[i] + ANSI_RESET;
+        for(int i = 0; i < encoded.length; i++){
+            if(encoded[i] == 'G'){
+                colored[i] = ANSI_GREEN +  userInput[i] + ANSI_RESET;
             }
-            else if(result[i] == 'Y'){
-                colored[i] = ANSI_YELLOW +  result[i] + ANSI_RESET;
+            else if(encoded[i] == 'Y'){
+                colored[i] = ANSI_YELLOW +  userInput[i] + ANSI_RESET;
             }
             else{
-                colored[i] = ANSI_RED +  result[i] + ANSI_RESET;
+                colored[i] = ANSI_RED +  userInput[i] + ANSI_RESET;
             }
         }
 
