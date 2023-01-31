@@ -11,6 +11,7 @@ import java.io.File;
 public class WordleApp
 {
     public static final int MAX_WORD_SIZE = 5;
+    public static final int MAX_ATTEMPTS = 5;
     public static final char WINNING_MESSAGE [] = {'W','I','N','N','E','R'};
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -71,9 +72,29 @@ public class WordleApp
         
     // }
 
-    // public char[] checkLetters(char[] userInput){
-        
-    // }
+
+    public char[] checkLetters(char[] userInput){
+        char[] result = new char[MAX_WORD_SIZE];
+
+        for(int i = 0; i < MAX_WORD_SIZE; i++){
+            if(userInput[i] == this.tempt[i]){
+                result[i] = 'G';
+            }
+            else{
+                for(char letter: this.tempt){
+                    if(userInput[i] == letter){
+                        result[i] = 'Y';
+                        break;
+                    }
+                    else{
+                        result[i] = 'X';
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
 
     public boolean isCorrect(char[] userInput){
         Boolean equal = Arrays.equals(this.tempt, userInput);
