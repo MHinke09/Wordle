@@ -10,6 +10,23 @@ import java.io.File;
 
 public class WordleApp
 {
+    //System.out.println(game.checkSubmission(charInput));
+        //Now it has to start a fresh game
+        //GAME is an object
+            //Check method that sees if the game is finished
+        //Dictionary is an object???
+        //USER has actions (possible inputs)
+        //STATES MAYBE?
+        //+--+ +-+ +-+ +-+ +--+
+       // | S   C   O   N   E |
+       // +--+ +-+ +-+ +-+ +--+
+
+            //Select a random word from dictionary
+            //Start user actions
+                //User chooses five letters (maybe l letters meaning the game can be expanded)
+                //We check if they are letters in the word and if they are in the correct positioning
+                //We also eliminate the unused letters from the users options - CHECK SPEC
+                //Repeat for x amount of turns
     public static final int MAX_WORD_SIZE = 5;
     public static final int MAX_ATTEMPTS = 6;
     public static final String WINNING_MESSAGE = "WINNER";
@@ -20,71 +37,105 @@ public class WordleApp
     public static final String ANSI_YELLOW = "\u001B[33m";
     //What operations are we going to be performing the most
     
+
     //We have to check if the word contains the letter at all (ORANGE SQUARE)
         //Then we have to check if the input[i] matches target[i] (GREEN SQUARE)
     
     //char[] targett = new char[MAX_WORD_SIZE];
     char tempt [] = {'c','r','a','n','e'};
     char test[];
+    Boolean won = false;
     public static void main( String[] args ) throws FileNotFoundException
     {
         System.out.println("---------------------------------------");
-        System.out.println("       Welcome to " + ANSI_GREEN +  "CS5031" + ANSI_RESET + "- Wordle");
+        System.out.println("       Welcome to " + ANSI_GREEN +"CS5031" + ANSI_RESET + "- Wordle");
         System.out.println("---------------------------------------");
-        System.out.println("Guess:");
+        
+        // System.out.println("Guess:");
 
+        String welcome = "                                                         ,--,                     \n                    ,----..                           ,---.'|                     \n           .---.   /   /   \\  ,-.----.       ,---,    |   | :       ,---,.        \n          /. ./|  /   .     : \\    /  \\    .'  .' `\\  :   : |     ,'  .' |        \n      .--'.  ' ; .   /   ;.  \\;   :    \\ ,---.'     \\ |   ' :   ,---.'   |        \n     /__./ \\ : |.   ;   /  ` ;|   | .\\ : |   |  .`\\  |;   ; '   |   |   .'        \n .--'.  '   \\' .;   |  ; \\ ; |.   : |: | :   : |  '  |'   | |__ :   :  |-,        \n/___/ \\ |    ' '|   :  | ; | '|   |  \\ : |   ' '  ;  :|   | :.'|:   |  ;/|        \n;   \\  \\;      :.   |  ' ' ' :|   : .  / '   | ;  .  |'   :    ;|   :   .'        \n \\   ;  `      |'   ;  \\; /  |;   | |  \\ |   | :  |  '|   |  ./ |   |  |-,        \n  .   \\    .\\  ; \\   \\  ',  / |   | ;\\  \\'   : | /  ; ;   : ;   '   :  ;/|        \n   \\   \\   ' \\ |  ;   :    /  :   ' | \\.'|   | '` ,/  |   ,/    |   |    \\        \n    :   '  |--\"    \\   \\ .'   :   : :-'  ;   :  .'    '---'     |   :   .'        \n     \\   \\ ;        `---`     |   |.'    |   ,.'                |   | ,'          \n      '---\"                   `---'      '---'                  `----'            \n                                                                                  ";
+        System.out.println(welcome);
+        System.out.println("------------------------------------------------------------------------------");
         WordleApp game = new WordleApp();
+        //tool string builder
+        String rules = "How To Play\n"
+                     + "Guess the Wordle in 6 tries.\n"
+                     + "- Each guess must be a valid 5-letter word.\n"
+                     + "- The color of the tiles will change to show how close your guess was to the word.\n";
+        
+        System.out.println(rules);             //Rules 
+        //New Game
+        //Settings
+        // - Hard Mode
+        //  - Any revealed hints must be used in subsequent guesses
+        // - Color?
+        // -Dark 
+        // -High Contrast Color Vision
+        //
+        //STATS???
+
+
+        //Setup
         ArrayList<String> dic = loadWordlist("../../../resources/wordlist.txt");
-
         game.test = getWordle(dic).toCharArray();
-
+        //TESTING
         for(char w: game.test){
             System.out.print(w);
         }
         System.out.println();
 
         Scanner kb = new Scanner(System.in);
+
+
         for(int i = 0; i < MAX_ATTEMPTS; i++){
+            System.out.println("Guess:");
             String input = kb.next();
             //PERFORM INPUT CHECKS
-            char[] charInput = input.toCharArray();
-            System.out.println((game.checkSubmission(charInput)));
+            System.out.print("\nEnter " + input + " (y/[n])?");
+            String confirm = kb.next();
+
+
+            if(confirm.equals("y")){
+                char[] charInput = input.toCharArray();
+                String display = game.checkSubmission(charInput);
+                if(game.won){
+                    System.out.println(display + "\nCorrectly discovered in " +(i + 1)+ " attempts"); 
+                    break;
+                }
+                System.out.println(display); 
+            }
+            
         }
         kb.close();
 
 
-    
-        //System.out.println(game.checkSubmission(charInput));
-        //Now it has to start a fresh game
-        //GAME is an object
-            //Check method that sees if the game is finished
-        //Dictionary is an object???
-        //USER has actions (possible inputs)
-        //STATES MAYBE?
-        //
-            //Select a random word from dictionary
-            //Start user actions
-                //User chooses five letters (maybe l letters meaning the game can be expanded)
-                //We check if they are letters in the word and if they are in the correct positioning
-                //We also eliminate the unused letters from the users options - CHECK SPEC
-                //Repeat for x amount of turns
+        //trie of hash tables or unique ds
     
     }
 
     public String checkSubmission(char[] userInput){
         // char test [] = {'c','r','a','n','e'};
         String result;
+        result = this.beautify(checkLetters(userInput), userInput);
 
         if(isCorrect(userInput)){
-            return WINNING_MESSAGE;
+            this.won = true;
+            return result;
+            
+
         }
         else{
-            result = this.beautify(checkLetters(userInput), userInput);
             return result;
         }
         
     }
 
+    public boolean inDictionary(ArrayList<String> dictionary, String input){
+
+        
+        return false;
+
+    }
 
     /**
      * 
@@ -143,9 +194,15 @@ public class WordleApp
             }
         }
 
-        String output   = "|-----| |-----| |-----| |-----| |-----|\n";
-        String output1  = "|  "+colored[0]+"  | |  "+colored[1]+"  | |  "+colored[2]+"  | |  "+colored[3]+"  | |  "+colored[4]+"  |\n";
-        String output2  = "|-----| |-----| |-----| |-----| |-----|\n";
+        //+--+ +-+ +-+ +-+ +--+
+       // | S   C   O   N   E |
+       // +--+ +-+ +-+ +-+ +--+
+    //     +-----+ +-----+ +-----+ +-----+ +-----+
+    //     |  d  | |  u  | |  p  | |  r  | |  s  |
+    //     +-----+ +-----+ +-----+ +-----+ +-----+
+        String output   = "+--+  -   -   -   --+\n";
+        String output1  = "| "+colored[0]+"   "+colored[1]+"   "+colored[2]+"   "+colored[3]+"   "+colored[4]+" |\n";
+        String output2  = "+--   -   -   -   --+\n";
 
         
 
