@@ -53,7 +53,22 @@ public class WordleApp
         
         // System.out.println("Guess:");
 
-        String welcome = "                                                         ,--,                     \n                    ,----..                           ,---.'|                     \n           .---.   /   /   \\  ,-.----.       ,---,    |   | :       ,---,.        \n          /. ./|  /   .     : \\    /  \\    .'  .' `\\  :   : |     ,'  .' |        \n      .--'.  ' ; .   /   ;.  \\;   :    \\ ,---.'     \\ |   ' :   ,---.'   |        \n     /__./ \\ : |.   ;   /  ` ;|   | .\\ : |   |  .`\\  |;   ; '   |   |   .'        \n .--'.  '   \\' .;   |  ; \\ ; |.   : |: | :   : |  '  |'   | |__ :   :  |-,        \n/___/ \\ |    ' '|   :  | ; | '|   |  \\ : |   ' '  ;  :|   | :.'|:   |  ;/|        \n;   \\  \\;      :.   |  ' ' ' :|   : .  / '   | ;  .  |'   :    ;|   :   .'        \n \\   ;  `      |'   ;  \\; /  |;   | |  \\ |   | :  |  '|   |  ./ |   |  |-,        \n  .   \\    .\\  ; \\   \\  ',  / |   | ;\\  \\'   : | /  ; ;   : ;   '   :  ;/|        \n   \\   \\   ' \\ |  ;   :    /  :   ' | \\.'|   | '` ,/  |   ,/    |   |    \\        \n    :   '  |--\"    \\   \\ .'   :   : :-'  ;   :  .'    '---'     |   :   .'        \n     \\   \\ ;        `---`     |   |.'    |   ,.'                |   | ,'          \n      '---\"                   `---'      '---'                  `----'            \n                                                                                  ";
+        String welcome = "                                                         ,--,                       "
+                       + "\n                    ,----..                           ,---.'|                     "
+                       + "\n           .---.   /   /   \\  ,-.----.       ,---,    |   | :       ,---,.       "
+                       + "\n          /. ./|  /   .     : \\    /  \\    .'  .' `\\  :   : |     ,'  .' |     "
+                       + "\n      .--'.  ' ; .   /   ;.  \\;   :    \\ ,---.'     \\ |   ' :   ,---.'   |     "
+                       + "\n     /__./ \\ : |.   ;   /  ` ;|   | .\\ : |   |  .`\\  |;   ; '   |   |   .'     "
+                       + "\n .--'.  '   \\' .;   |  ; \\ ; |.   : |: | :   : |  '  |'   | |__ :   :  |-,      "
+                       + "\n/___/ \\ |    ' '|   :  | ; | '|   |  \\ : |   ' '  ;  :|   | :.'|:   |  ;/|      "
+                       + "\n;   \\  \\;      :.   |  ' ' ' :|   : .  / '   | ;  .  |'   :    ;|   :   .'      "
+                       + "\n \\   ;  `      |'   ;  \\; /  |;   | |  \\ |   | :  |  '|   |  ./ |   |  |-,     "
+                       + "\n  .   \\    .\\  ; \\   \\  ',  / |   | ;\\  \\'   : | /  ; ;   : ;   '   :  ;/|  "
+                       + "\n   \\   \\   ' \\ |  ;   :    /  :   ' | \\.'|   | '` ,/  |   ,/    |   |    \\   "
+                       + "\n    :   '  |--\"    \\   \\ .'   :   : :-'  ;   :  .'    '---'     |   :   .'     "
+                       + "\n     \\   \\ ;        `---`     |   |.'    |   ,.'                |   | ,'        "
+                       + "\n      '---\"                   `---'      '---'                  `----'           "
+                       + "\n                                                                                  ";
         System.out.println(welcome);
         System.out.println("------------------------------------------------------------------------------");
         WordleApp game = new WordleApp();
@@ -71,13 +86,13 @@ public class WordleApp
         // - Color?
         // -Dark 
         // -High Contrast Color Vision
-        //
+        //Twittfy outcome
         //STATS???
 
 
         //Setup
         ArrayList<String> dic = loadWordlist("../../../resources/wordlist.txt");
-        game.test = getWordle(dic).toCharArray();
+        game.test = getWord(dic).toCharArray();
         //TESTING
         for(char w: game.test){
             System.out.print(w);
@@ -86,7 +101,7 @@ public class WordleApp
 
         Scanner kb = new Scanner(System.in);
 
-
+        //Game Logic
         for(int i = 0; i < MAX_ATTEMPTS; i++){
             System.out.println("Guess:");
             String input = kb.next();
@@ -113,6 +128,7 @@ public class WordleApp
     
     }
 
+    //Waht if empty, what if null, what if very large
     public String checkSubmission(char[] userInput){
         // char test [] = {'c','r','a','n','e'};
         String result;
@@ -209,7 +225,7 @@ public class WordleApp
         return output + output1 + output2;
     }
 
-    protected static String getWordle(ArrayList<String> words){
+    protected static String getWord(ArrayList<String> words){
         int index = (int)(Math.random() * words.size());
         return words.get(index);
     }

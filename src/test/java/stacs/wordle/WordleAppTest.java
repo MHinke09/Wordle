@@ -22,6 +22,27 @@ public class WordleAppTest
        // String wordle = WordleApp.getWordle(wordlist);
         //assertEquals("test", wordle);
     }
+   
+    @Test
+    public void shouldCreateEmptyWordleApp()
+    {
+        WordleApp app = new WordleApp();
+        assertEquals(false, app.won);
+        assertEquals(null, app.test);
+    }
+
+    //Maybe try with null, empty etc
+    @Test
+    public void shouldSetTarget()
+    {
+        WordleApp app = new WordleApp();
+        char target[] = {'c','r','a','n','e'};
+        app.setTarget(target);
+
+        // test wordlist only contains 3 words, so wordlist should have the size of 3
+        assertEquals(target, app.test);
+    }
+
 
     @Test
     public void shouldCompareTwoCharArrays()
