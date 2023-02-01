@@ -226,8 +226,15 @@ public class WordleApp
     }
 
     protected static String getWord(ArrayList<String> words){
-        int index = (int)(Math.random() * words.size());
-        return words.get(index);
+        if(words!= null && !words.isEmpty())
+        {
+            int index = (int)(Math.random() * words.size());
+            return words.get(index);
+        }
+        else{
+            
+        }
+        
     }
 
     /**

@@ -1,7 +1,7 @@
 package stacs.wordle;
 import java.util.Arrays;
 
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -12,16 +12,40 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WordleAppTest
 {
     @Test
-    public void shouldLoadWordlist() throws FileNotFoundException
+    public void loadingAValidWordlist() throws FileNotFoundException
     {
         ArrayList<String> wordlist = WordleApp.loadWordlist("src/test/resources/wordlist-test.txt");
 
         // test wordlist only contains 3 words, so wordlist should have the size of 3
         assertEquals(3, wordlist.size());
-
-       // String wordle = WordleApp.getWordle(wordlist);
-        //assertEquals("test", wordle);
     }
+
+    @Test
+    public void loadingAnInvlaidWordlist() throws FileNotFoundException
+    {
+        String fakeFile = "fakeFile.txt";
+
+        Exception exception = assertThrows(FileNotFoundException.class, () ->
+            WordleApp.loadWordlist(fakeFile));
+        assertEquals(fakeFile + " (No such file or directory)", exception.getMessage());
+
+    }
+
+    @Test
+    public void gettingWordFromWordsArrayList()
+    {
+        ArrayList<String> wordlist = new ArrayList<>();
+        wordlist.add("word");
+        assertEquals("word", WordleApp.getWord(wordlist));
+    }
+
+    @Test
+    public void gettingWordFromEmptyWordsArrayList()
+    {
+        ArrayList<String> wordlist = new ArrayList<>();
+        assertEquals("word", WordleApp.getWord(wordlist));
+    }
+
    
     @Test
     public void shouldCreateEmptyWordleApp()
