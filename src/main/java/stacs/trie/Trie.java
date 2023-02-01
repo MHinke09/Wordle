@@ -1,13 +1,13 @@
 package stacs.trie;
 //https://github.com/eugenp/tutorials/tree/master/data-structures/src/main/java/com/baeldung/trie
-class Trie {
+public class Trie {
     private TrieNode root;
 
-    Trie() {
+    public Trie() {
         root = new TrieNode();
     }
 
-    void insert(String word) {
+    public void insert(String word) {
         TrieNode current = root;
 
         for (char l : word.toCharArray()) {
@@ -16,11 +16,11 @@ class Trie {
         current.setEndOfWord(true);
     }
 
-    boolean delete(String word) {
+    public boolean delete(String word) {
         return delete(root, word, 0);
     }
 
-    boolean containsNode(String word) {
+    public boolean containsNode(String word) {
         TrieNode current = root;
 
         for (int i = 0; i < word.length(); i++) {
@@ -34,7 +34,7 @@ class Trie {
         return current.isEndOfWord();
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return root == null;
     }
 

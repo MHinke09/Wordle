@@ -1,5 +1,6 @@
 package stacs.wordle;
 
+import stacs.trie.Trie;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class WordleApp
     //char[] targett = new char[MAX_WORD_SIZE];
     char tempt [] = {'c','r','a','n','e'};
     char test[];
+    Trie trie = new Trie();
     Boolean won = false;
     public static void main( String[] args ) throws FileNotFoundException
     {
@@ -244,6 +246,8 @@ public class WordleApp
         
     }
 
+    
+
     public boolean inDictionary(ArrayList<String> dictionary, String input){
 
     
@@ -263,10 +267,22 @@ public class WordleApp
         ArrayList<String> words = new ArrayList<String>();
         while (s.hasNext()){
             words.add(s.next());
+            
         }
         s.close();
         return words;
     }
+
+    public void loadWordlistIntoTrie(String wordlistPath) throws FileNotFoundException
+    {
+        Scanner s = new Scanner(new File(wordlistPath));
+        while (s.hasNext()){
+            this.trie.insert(s.next());
+        }
+        s.close();
+    }
+    //HOW TO SELECT RANDOM WORD FROM TRIE?
+    //ONCE GUESS MADE SAVE TO CACHE
 
 
 }
