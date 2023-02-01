@@ -1,4 +1,5 @@
 package stacs.wordle;
+
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Assertions;
@@ -43,12 +44,16 @@ public class WordleAppTest
     public void gettingWordFromEmptyWordsArrayList()
     {
         ArrayList<String> wordlist = new ArrayList<>();
-        assertEquals("word", WordleApp.getWord(wordlist));
+        assertEquals(null, WordleApp.getWord(wordlist));
     }
 
-   
     @Test
-    public void shouldCreateEmptyWordleApp()
+    public void convertingDictionaryIntoTrie(){
+
+    }
+
+    @Test
+    public void creatingAnEmptyWordleApp()
     {
         WordleApp app = new WordleApp();
         assertEquals(false, app.won);
@@ -57,7 +62,7 @@ public class WordleAppTest
 
     //Maybe try with null, empty etc
     @Test
-    public void shouldSetTarget()
+    public void settingWordleAppTarget()
     {
         WordleApp app = new WordleApp();
         char target[] = {'c','r','a','n','e'};
@@ -69,7 +74,7 @@ public class WordleAppTest
 
 
     @Test
-    public void shouldCompareTwoCharArrays()
+    public void applyIsCorrectOnTwoEqualCharArrays()
     {
         char input [] = {'c','r','a','n','e'};
        // char target [] = {'c','r','a','n','e'};
@@ -84,7 +89,22 @@ public class WordleAppTest
     }
 
     @Test
-    public void shouldCompareLetters()
+    public void applyIsCorrectOnTwoDifferentCharArrays()
+    {
+        char input [] = {'c','r','a','n','e'};
+       // char target [] = {'c','r','a','n','e'};
+       char target [] = {'c','r','x','n','e'};
+
+        WordleApp app = new WordleApp();
+        
+        app.setTarget(target);
+        Boolean eq = app.isCorrect(input);
+        // test wordlist only contains 3 words, so wordlist should have the size of 3
+        assertEquals(false, eq);
+    }
+
+    @Test
+    public void mapUserInputToAccuracy()
     {
         char input [] = {'c','w','a','r','e'};
        // char target [] = {'c','r','a','n','e'};

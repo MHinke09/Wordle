@@ -17,9 +17,9 @@ public class WordleApp
         //Dictionary is an object???
         //USER has actions (possible inputs)
         //STATES MAYBE?
-        //+--+ +-+ +-+ +-+ +--+
+        //+-------------------+
        // | S   C   O   N   E |
-       // +--+ +-+ +-+ +-+ +--+
+       // +-------------------+
 
             //Select a random word from dictionary
             //Start user actions
@@ -29,7 +29,7 @@ public class WordleApp
                 //Repeat for x amount of turns
     public static final int MAX_WORD_SIZE = 5;
     public static final int MAX_ATTEMPTS = 6;
-    public static final String WINNING_MESSAGE = "WINNER";
+    public static final String WINNING_MESSAGE = "SOLVED";
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m"; 
@@ -68,9 +68,10 @@ public class WordleApp
                        + "\n    :   '  |--\"    \\   \\ .'   :   : :-'  ;   :  .'    '---'     |   :   .'     "
                        + "\n     \\   \\ ;        `---`     |   |.'    |   ,.'                |   | ,'        "
                        + "\n      '---\"                   `---'      '---'                  `----'           "
-                       + "\n                                                                                  ";
+                       + "\n                                                                                  "
+                       + "\n------------------------------------------------------------------------------";
         System.out.println(welcome);
-        System.out.println("------------------------------------------------------------------------------");
+
         WordleApp game = new WordleApp();
         //tool string builder
         String rules = "How To Play\n"
@@ -93,6 +94,7 @@ public class WordleApp
         //Setup
         ArrayList<String> dic = loadWordlist("../../../resources/wordlist.txt");
         game.test = getWord(dic).toCharArray();
+        //CHECK IF NULL
         //TESTING
         for(char w: game.test){
             System.out.print(w);
@@ -128,6 +130,8 @@ public class WordleApp
     
     }
 
+    //Logic
+
     //Waht if empty, what if null, what if very large
     public String checkSubmission(char[] userInput){
         // char test [] = {'c','r','a','n','e'};
@@ -144,13 +148,6 @@ public class WordleApp
             return result;
         }
         
-    }
-
-    public boolean inDictionary(ArrayList<String> dictionary, String input){
-
-        
-        return false;
-
     }
 
     /**
@@ -191,9 +188,15 @@ public class WordleApp
         return equal;
     }
 
+
+
+// Class methods
     public void setTarget(char[] target){
         this.test = target;
     }
+
+
+//Output format
 
     public String beautify(char[] encoded, char[] userInput){
         String[] colored = new String[encoded.length]; 
@@ -216,14 +219,17 @@ public class WordleApp
     //     +-----+ +-----+ +-----+ +-----+ +-----+
     //     |  d  | |  u  | |  p  | |  r  | |  s  |
     //     +-----+ +-----+ +-----+ +-----+ +-----+
-        String output   = "+--+  -   -   -   --+\n";
+        String output   = "+-------------------+\n";
         String output1  = "| "+colored[0]+"   "+colored[1]+"   "+colored[2]+"   "+colored[3]+"   "+colored[4]+" |\n";
-        String output2  = "+--   -   -   -   --+\n";
+        String output2  = "+-------------------+\n";
 
         
 
         return output + output1 + output2;
     }
+
+
+//Dictionary
 
     protected static String getWord(ArrayList<String> words){
         if(words!= null && !words.isEmpty())
@@ -232,9 +238,17 @@ public class WordleApp
             return words.get(index);
         }
         else{
-            
+            System.out.println("Build Failure: It seems the dictionary ArrayList is empty or does not exist.");
+            return null; //Is this the best
         }
         
+    }
+
+    public boolean inDictionary(ArrayList<String> dictionary, String input){
+
+    
+        return false;
+
     }
 
     /**
