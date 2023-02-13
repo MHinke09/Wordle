@@ -233,6 +233,12 @@ public class WordleApp
 
 //Dictionary
 
+    /**
+     * Gets a random word from a list of words.
+     *
+     * @param words the list of words from which to select a word
+     * @return a randomly selected word from the list, or `null` if the list is empty or `null`
+     */
     protected static String getWord(ArrayList<String> words){
         if(words!= null && !words.isEmpty())
         {
@@ -246,20 +252,16 @@ public class WordleApp
         
     }
 
-    
-
     public boolean inDictionary(ArrayList<String> dictionary, String input){
-
-    
         return false;
-
     }
 
     /**
-     * 
-     * @param wordlistPath
-     * @return
-     * @throws FileNotFoundException
+     * Loads a list of words from a text file and returns the words in an ArrayList.
+     *
+     * @param wordlistPath the path of the text file containing the words
+     * @return an ArrayList of words read from the text file
+     * @throws FileNotFoundException if the text file is not found
      */
     protected static ArrayList<String> loadWordlist(String wordlistPath) throws FileNotFoundException
     {
