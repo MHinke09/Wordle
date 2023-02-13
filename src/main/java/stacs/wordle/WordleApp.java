@@ -11,23 +11,6 @@ import java.io.File;
 
 public class WordleApp
 {
-    //System.out.println(game.checkSubmission(charInput));
-        //Now it has to start a fresh game
-        //GAME is an object
-            //Check method that sees if the game is finished
-        //Dictionary is an object???
-        //USER has actions (possible inputs)
-        //STATES MAYBE?
-        //+-------------------+
-       // | S   C   O   N   E |
-       // +-------------------+
-
-            //Select a random word from dictionary
-            //Start user actions
-                //User chooses five letters (maybe l letters meaning the game can be expanded)
-                //We check if they are letters in the word and if they are in the correct positioning
-                //We also eliminate the unused letters from the users options - CHECK SPEC
-                //Repeat for x amount of turns
     public static final int MAX_WORD_SIZE = 5;
     public static final int MAX_ATTEMPTS = 6;
     public static final String WINNING_MESSAGE = "SOLVED";
@@ -52,8 +35,6 @@ public class WordleApp
         System.out.println("---------------------------------------");
         System.out.println("       Welcome to " + ANSI_GREEN +"CS5031" + ANSI_RESET + "- Wordle");
         System.out.println("---------------------------------------");
-        
-        // System.out.println("Guess:");
 
         String welcome = "                                                         ,--,                       "
                        + "\n                    ,----..                           ,---.'|                     "
@@ -134,7 +115,11 @@ public class WordleApp
 
     //Logic
 
-    //Waht if empty, what if null, what if very large
+    /**
+    * This function checks the word submitted by the user.
+    * @param userInput the word submitted by the user to be checked
+    * @return The result of the check, in the form of a string that contains the word and its corresponding letters with colors indicating the correctness of each letter
+    */
     public String checkSubmission(char[] userInput){
         // char test [] = {'c','r','a','n','e'};
         String result;
@@ -143,8 +128,6 @@ public class WordleApp
         if(isCorrect(userInput)){
             this.won = true;
             return result;
-            
-
         }
         else{
             return result;
@@ -153,9 +136,12 @@ public class WordleApp
     }
 
     /**
-     * 
-     * @param userInput
-     * @return
+     * Checks the user's guess against the target word and returns an array of results.
+     *
+     * @param userInput the user's guess
+     * @return an array of results, where 'G' represents a correctly guessed letter and place, 
+     *                                    'Y' represents a correctly guessed letter in the wrong place, 
+     *                                and 'X' represents a letter that does not exist in the target word
      */
     public char[] checkLetters(char[] userInput){
         char[] result = new char[MAX_WORD_SIZE];
@@ -192,14 +178,18 @@ public class WordleApp
 
 
 
-// Class methods
+
     public void setTarget(char[] target){
         this.test = target;
     }
 
-
-//Output format
-
+    /**
+     * Transforms the encoded result array into a visually appealing string representation.
+     *
+     * @param encoded the result array from the `checkLetters` function
+     * @param userInput the user's guess
+     * @return a visually appealing string representation of the encoded result array
+     */
     public String beautify(char[] encoded, char[] userInput){
         String[] colored = new String[encoded.length]; 
 
@@ -215,23 +205,14 @@ public class WordleApp
             }
         }
 
-        //+--+ +-+ +-+ +-+ +--+
-       // | S   C   O   N   E |
-       // +--+ +-+ +-+ +-+ +--+
-    //     +-----+ +-----+ +-----+ +-----+ +-----+
-    //     |  d  | |  u  | |  p  | |  r  | |  s  |
-    //     +-----+ +-----+ +-----+ +-----+ +-----+
         String output   = "+-------------------+\n";
         String output1  = "| "+colored[0]+"   "+colored[1]+"   "+colored[2]+"   "+colored[3]+"   "+colored[4]+" |\n";
         String output2  = "+-------------------+\n";
-
-        
 
         return output + output1 + output2;
     }
 
 
-//Dictionary
 
     /**
      * Gets a random word from a list of words.
