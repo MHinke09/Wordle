@@ -116,14 +116,18 @@ public class WordleApp
     //Logic
 
     /**
-    * This function checks the word submitted by the user.
-    * @param userInput the word submitted by the user to be checked
-    * @return The result of the check, in the form of a string that contains the word and its corresponding letters with colors indicating the correctness of each letter
-    */
+     * checkSubmission method validates the user's submitted word by comparing it to the target word.
+     * If the submitted word is correct, the `won` property is set to true.
+     * The method returns the beautified result which is a colored version of the input word.
+     * 
+     * @param userInput an array of characters representing the user's submitted word.
+     * @return a beautified string representation of the encoded word and the user input.
+     */
+
     public String checkSubmission(char[] userInput){
         // char test [] = {'c','r','a','n','e'};
         String result;
-        result = this.beautify(checkLetters(userInput), userInput);
+        result = beautify(checkLetters(userInput), userInput);
 
         if(isCorrect(userInput)){
             this.won = true;
@@ -167,9 +171,10 @@ public class WordleApp
     }
 
     /**
+     * The isCorrect method takes the user input as a parameter and checks if it is equal to the target word set by the {@link #setTarget(char[])} method.
      * 
-     * @param userInput
-     * @return
+     * @param userInput  a character array representing the user's input
+     * @return a boolean value indicating whether the user's input is correct or not
      */
     public boolean isCorrect(char[] userInput){
         Boolean equal = Arrays.equals(this.test, userInput);
@@ -178,7 +183,11 @@ public class WordleApp
 
 
 
-
+    /**
+    * The setTarget method sets the target word for the game.
+    *
+    * @param target the target word as a character array.
+    */
     public void setTarget(char[] target){
         this.test = target;
     }
@@ -190,7 +199,7 @@ public class WordleApp
      * @param userInput the user's guess
      * @return a visually appealing string representation of the encoded result array
      */
-    public String beautify(char[] encoded, char[] userInput){
+    public static String beautify(char[] encoded, char[] userInput){
         String[] colored = new String[encoded.length]; 
 
         for(int i = 0; i < encoded.length; i++){
