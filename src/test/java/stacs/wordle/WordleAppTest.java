@@ -1,13 +1,8 @@
 package stacs.wordle;
 
-import java.util.Arrays;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WordleAppTest

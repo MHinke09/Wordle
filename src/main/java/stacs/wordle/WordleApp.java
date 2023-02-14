@@ -1,6 +1,6 @@
 package stacs.wordle;
 
-import stacs.trie.Trie;
+//import stacs.trie.Trie;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -19,16 +19,9 @@ public class WordleApp
     public static final String ANSI_RED = "\u001B[31m"; 
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_YELLOW = "\u001B[33m";
-    //What operations are we going to be performing the most
-    
 
-    //We have to check if the word contains the letter at all (ORANGE SQUARE)
-        //Then we have to check if the input[i] matches target[i] (GREEN SQUARE)
-    
-    //char[] targett = new char[MAX_WORD_SIZE];
     char tempt [] = {'c','r','a','n','e'};
     char test[];
-    Trie trie = new Trie();
     Boolean won = false;
     public static void main( String[] args ) throws FileNotFoundException
     {
@@ -60,24 +53,14 @@ public class WordleApp
         String rules = "How To Play\n"
                      + "Guess the Wordle in 6 tries.\n"
                      + "- Each guess must be a valid 5-letter word.\n"
-                     + "- The color of the tiles will change to show how close your guess was to the word.\n";
+                     + "- The color of the letter will change to show how close your guess was to the word.\n";
         
-        System.out.println(rules);             //Rules 
-        //New Game
-        //Settings
-        // - Hard Mode
-        //  - Any revealed hints must be used in subsequent guesses
-        // - Color?
-        // -Dark 
-        // -High Contrast Color Vision
-        //Twittfy outcome
-        //STATS???
+        System.out.println(rules);
 
 
         //Setup
         ArrayList<String> dic = loadWordlist("../../../resources/wordlist.txt");
         game.test = getWord(dic).toCharArray();
-        //CHECK IF NULL
         //TESTING
         for(char w: game.test){
             System.out.print(w);
@@ -108,12 +91,9 @@ public class WordleApp
         }
         kb.close();
 
-
-        //trie of hash tables or unique ds
     
     }
 
-    //Logic
 
     /**
      * checkSubmission method validates the user's submitted word by comparing it to the target word.
@@ -265,16 +245,6 @@ public class WordleApp
         return words;
     }
 
-    public void loadWordlistIntoTrie(String wordlistPath) throws FileNotFoundException
-    {
-        Scanner s = new Scanner(new File(wordlistPath));
-        while (s.hasNext()){
-            this.trie.insert(s.next());
-        }
-        s.close();
-    }
-    //HOW TO SELECT RANDOM WORD FROM TRIE?
-    //ONCE GUESS MADE SAVE TO CACHE
 
 
 }
